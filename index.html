@@ -53,8 +53,8 @@ S.history.unshift({id:uid(),taskId:id,title:task.title,minutes:task.minutes,
 folderTitle:task.folderId?folderName(task.folderId):"",reward:grant/60000,time:t});
 tell("Задача выполнена! +"+Math.floor(grant/60000)+" минут отдыха ✦")}
 function sync(){var t=now(),changed=false;
-if(S.focus&&!S.focus.paused&&left(S.focus,t)<=0){var f=S.focus;S.focus=null;complete(f.id,f.ends);changed=true}
-if(S.rest&&!S.rest.paused&&left(S.rest,t)<=0){S.rest=null;changed=true}
+if(S.focus&&!S.focus.paused&&left(S.focus,t)<=0){var f=S.focus;S.focus=null;complete(f.id,f.ends);changed=true;if($("focus-dialog").open)$("focus-dialog").close()}
+if(S.rest&&!S.rest.paused&&left(S.rest,t)<=0){S.rest=null;changed=true;if($("rest-dialog").open)$("rest-dialog").close();tell("Отдых завершён ✦")}
 if(S.day!==day(t)){S.day=day(t);S.earned=earnedToday();changed=true}
 if(changed)save();return changed}
 function clock(ms){var secs=Math.ceil(Math.max(0,ms)/1000);return String(Math.floor(secs/60)).padStart(2,"0")+":"+String(secs%60).padStart(2,"0")}
